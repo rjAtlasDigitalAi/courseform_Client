@@ -9,7 +9,7 @@ const INSTITUTION_NAME = "EduPrime Institute";
 const INSTITUTION_HANDLE = "eduprime"; // Used for social link URLs
 
 export default function App() {
-  
+
   // Implementation of smooth scroll fade-in observer
   useEffect(() => {
     const observerOptions = {
@@ -46,7 +46,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-white text-gray-800 flex flex-col relative overflow-x-hidden selection:bg-orange-light/50">
-      
+
       {/* 🧭 GLOBAL STICKY MINIMAL HEADER */}
       <header className="sticky top-0 z-40 w-full bg-white/80 backdrop-blur-md border-b border-gray-100 shadow-sm transition-all duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between">
@@ -72,17 +72,17 @@ export default function App() {
 
       {/* 🌟 TWO-COLUMN SPLIT CONTAINER */}
       <div className="w-full flex flex-col md:flex-row relative bg-white flex-grow">
-        
+
         {/* LEFT PANEL (50% width) - Sticky desktop brand welcome panel */}
         <section className="w-full md:w-1/2 min-h-[calc(100vh-4rem)] md:min-h-[calc(100vh-5rem)] md:h-[calc(100vh-5rem)] md:sticky md:top-20 p-6 sm:p-12 md:p-16 flex flex-col justify-between bg-gradient-to-br from-[#FFF8F3] via-white to-[#FFF0E5] relative overflow-hidden border-b md:border-b-0 border-gray-100">
-          
+
           {/* Background Animated Blobs (Bounded to left panel) */}
           <div className="absolute -top-12 -left-12 w-64 h-64 sm:w-80 sm:h-80 bg-orange-light/20 rounded-full filter blur-3xl animate-blob-1 pointer-events-none z-0"></div>
           <div className="absolute -bottom-16 -right-16 w-80 h-80 sm:w-96 sm:h-96 bg-orange/10 rounded-full filter blur-3xl animate-blob-2 pointer-events-none z-0"></div>
 
           {/* Central Core Content Container */}
           <div className="my-auto py-6 max-w-[480px] mx-auto w-full relative z-10 flex flex-col gap-6 sm:gap-8 justify-center">
-            
+
             {/* Admissions Badge */}
             <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-orange-light/35 border border-orange-light/45 text-orange-deep font-body text-xs font-semibold uppercase tracking-wider w-max animate-pulse">
               🎓 Admissions Open For 2026
@@ -96,7 +96,7 @@ export default function App() {
               </span>
             </h1>
 
-           
+
 
             {/* Countdown Timer Widget */}
             <div className="w-full">
@@ -114,8 +114,8 @@ export default function App() {
 
           {/* Subtle scroll or bottom decorative element */}
           <div className="pt-4 relative z-10 text-center w-full flex justify-center">
-        
-            
+
+
             {/* Mobile Indicator */}
             <button
               onClick={handleScrollToForm}
@@ -138,10 +138,10 @@ export default function App() {
           className="w-full md:w-1/2 min-h-[calc(100vh-4rem)] md:min-h-[calc(100vh-5rem)] bg-white flex flex-col justify-center py-12 sm:py-20 px-6 sm:px-12 md:px-16 lg:px-20 relative z-10"
         >
           <div className="fade-in-section mx-auto w-full flex flex-col justify-center h-full gap-5 sm:gap-6">
-            
-            
 
-           
+
+
+
 
             {/* Registration Form Card */}
             <div className="w-full">
@@ -159,14 +159,14 @@ export default function App() {
               EP
             </div> */}
             <span className="font-heading font-extrabold text-white tracking-tight leading-tight">
-  <span className="text-base">
-    RJ ATLAS DIGITAL AI
-  </span>
-  <br />
-  <span className="text-[11px] font-medium tracking-wide opacity-80">
-    Thalassery
-  </span>
-</span>
+              <span className="text-base">
+                RJ ATLAS DIGITAL AI
+              </span>
+              <br />
+              <span className="text-[11px] font-medium tracking-wide opacity-80">
+                Thalassery
+              </span>
+            </span>
           </div>
           {/* <p className="font-body text-xs sm:text-sm">
             &copy; {new Date().getFullYear()} {INSTITUTION_NAME}. All rights reserved.

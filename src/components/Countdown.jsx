@@ -1,73 +1,77 @@
 import React, { useState, useEffect } from 'react';
 
-// Configure target date here (e.g., '2026-06-21T15:35:00').
-// By default, it dynamically sets the target to exactly 30 days from now.
-const TARGET_DATE = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
-
 export default function Countdown() {
-  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
+  // 5 minute countdown
+  const COUNTDOWN_TIME = 5 * 60;
 
-  function calculateTimeLeft() {
-    const difference = +new Date(TARGET_DATE) - +new Date();
-    let timeLeft = {};
+  const [timeLeft, setTimeLeft] = useState(() => {
+    // persist timer even after refresh
+    const savedEndTime = localStorage.getItem("offerEndTime");
 
-    if (difference > 0) {
-      timeLeft = {
-        days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-        hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-        minutes: Math.floor((difference / 1000 / 60) % 60),
-        seconds: Math.floor((difference / 1000) % 60),
-      };
-    } else {
-      timeLeft = { expired: true };
+    if (savedEndTime) {
+      const remaining = Math.floor((+savedEndTime - Date.now()) / 1000);
+      return remaining > 0 ? remaining : COUNTDOWN_TIME;
     }
 
-    return timeLeft;
-  }
+    const newEndTime = Date.now() + COUNTDOWN_TIME * 1000;
+    localStorage.setItem("offerEndTime", newEndTime);
+
+    return COUNTDOWN_TIME;
+  });
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setTimeLeft(calculateTimeLeft());
+      setTimeLeft((prev) => {
+        if (prev <= 1) {
+          // restart automatically
+          const newEndTime = Date.now() + COUNTDOWN_TIME * 1000;
+          localStorage.setItem("offerEndTime", newEndTime);
+          return COUNTDOWN_TIME;
+        }
+        return prev - 1;
+      });
     }, 1000);
 
     return () => clearInterval(timer);
   }, []);
 
-  if (timeLeft.expired) {
-    return (
-      <div className="text-center py-6 px-4 animate-bounce">
-        <h3 className="font-heading text-2xl sm:text-3xl font-extrabold text-orange-deep bg-orange-light/30 border border-orange-light py-4 px-6 rounded-2xl inline-block shadow-md">
-          🎉 Registration is Now Open!
-        </h3>
-      </div>
-    );
-  }
+  const minutes = Math.floor(timeLeft / 60);
+  const seconds = timeLeft % 60;
 
-  const formatNumber = (num) => String(num).padStart(2, '0');
-
-  const units = [
-    { label: 'Days', value: timeLeft.days ?? 0 },
-    { label: 'Hours', value: timeLeft.hours ?? 0 },
-    { label: 'Minutes', value: timeLeft.minutes ?? 0 },
-    { label: 'Seconds', value: timeLeft.seconds ?? 0 },
-  ];
+  const formatNumber = (num) => String(num).padStart(2, "0");
 
   return (
-    <div className="w-full max-w-2xl mx-auto px-4 py-4">
-      <div className="grid grid-cols-4 gap-2 sm:gap-4 md:gap-6">
-        {units.map((unit, index) => (
+    <div className="w-full max-w-md mx-auto px-4 py-4">
+      <div className="text-center mb-4">
+        <p className="text-red-500 font-bold uppercase tracking-widest text-xs sm:text-sm animate-pulse">
+          ⚡ Limited Time Registration Closing Soon
+        </p>
+      </div>
+
+      <div className="grid grid-cols-2 gap-4">
+        {[
+          { label: "Minutes", value: minutes },
+          { label: "Seconds", value: seconds },
+        ].map((unit, index) => (
           <div
             key={index}
-            className="bg-white rounded-xl shadow-md border-t-4 border-orange flex flex-col justify-center items-center py-4 sm:py-6 px-2 transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
+            className="bg-white rounded-2xl shadow-xl border-t-4 border-orange flex flex-col justify-center items-center py-6 px-4 transition-all duration-300 hover:scale-105"
           >
-            <span className="font-heading text-3xl sm:text-4xl md:text-5xl font-black text-black tabular-nums tracking-tight">
+            <span className="font-heading text-5xl sm:text-6xl font-black text-black tabular-nums">
               {formatNumber(unit.value)}
             </span>
-            <span className="font-body text-[10px] sm:text-xs md:text-sm font-semibold text-gray-500 uppercase tracking-widest mt-1 sm:mt-2 text-center">
+
+            <span className="font-body text-xs sm:text-sm font-semibold text-gray-500 uppercase tracking-[0.2em] mt-2">
               {unit.label}
             </span>
           </div>
         ))}
+      </div>
+
+      <div className="text-center mt-4">
+        <p className="text-xs sm:text-sm text-gray-500">
+          Hurry! Seats are filling fast.
+        </p>
       </div>
     </div>
   );

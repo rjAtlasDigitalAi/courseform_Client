@@ -41,14 +41,17 @@ export default function Countdown() {
   const formatNumber = (num) => String(num).padStart(2, "0");
 
   return (
-    <div className="w-full max-w-md mx-auto px-4 py-4">
-      <div className="text-center mb-4">
+    <div className="w-full max-w-md mx-auto px-4 py-4 flex flex-col justify-start items-center min-h-screen pt-10">
+      
+      {/* Top Alert */}
+      <div className="text-center mb-5">
         <p className="text-red-500 font-bold uppercase tracking-widest text-xs sm:text-sm animate-pulse">
-          ⚡ Limited Time Registration Closing Soon
+          ⏰ Limited Time Registration Closing Soon
         </p>
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
+      {/* Timer Cards */}
+      <div className="grid grid-cols-2 gap-4 w-full">
         {[
           { label: "Minutes", value: minutes },
           { label: "Seconds", value: seconds },
@@ -68,11 +71,13 @@ export default function Countdown() {
         ))}
       </div>
 
-      <div className="text-center mt-4">
+      {/* Bottom Text */}
+      <div className="text-center mt-5">
         <p className="text-xs sm:text-sm text-gray-500">
           Hurry! Seats are filling fast.
         </p>
       </div>
+
     </div>
   );
 }

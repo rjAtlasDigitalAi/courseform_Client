@@ -3,8 +3,9 @@ import React, { useState } from 'react';
 export default function RegistrationForm() {
   const [formData, setFormData] = useState({
     name: '',
-    email: '',
     phone: '',
+    age: '',
+    studentClass: '',
     slot: '',
     courseDetail: '',
   });
@@ -48,19 +49,23 @@ export default function RegistrationForm() {
     const fullPhone = `+91 ${formData.phone.trim()}`;
 
     try {
-      const response = await fetch('https://courseformserver.vercel.app/api/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          phone: fullPhone,
-          slot: formData.slot,
-          courseDetail: formData.courseDetail,
-        }),
-      });
+      const response = await fetch(
+        'https://courseformserver.vercel.app/api/register',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            name: formData.name,
+            phone: fullPhone,
+            age: formData.age,
+            studentClass: formData.studentClass,
+            slot: formData.slot,
+            courseDetail: formData.courseDetail,
+          }),
+        }
+      );
 
       const data = await response.json();
 
@@ -72,8 +77,9 @@ export default function RegistrationForm() {
 
         setFormData({
           name: '',
-          email: '',
           phone: '',
+          age: '',
+          studentClass: '',
           slot: '',
           courseDetail: '',
         });
@@ -145,13 +151,13 @@ export default function RegistrationForm() {
           onSubmit={handleSubmit}
           className="space-y-5 sm:space-y-6"
         >
-          {/* Full Name */}
+          {/* Student Name */}
           <div>
             <label
               htmlFor="name"
               className="block font-body text-sm font-semibold text-gray-700 mb-1.5 sm:mb-2"
             >
-              Full Name
+              Student Name
             </label>
 
             <input
@@ -162,28 +168,7 @@ export default function RegistrationForm() {
               onChange={handleChange}
               required
               className="w-full px-4 py-3 rounded-lg border border-gray-300 text-gray-800 placeholder-gray-400 focus:outline-none focus:border-orange focus:ring-1 focus:ring-orange transition-colors duration-200 font-body text-sm sm:text-base"
-              placeholder="Enter your full name"
-            />
-          </div>
-
-          {/* Email */}
-          <div>
-            <label
-              htmlFor="email"
-              className="block font-body text-sm font-semibold text-gray-700 mb-1.5 sm:mb-2"
-            >
-              Email Address
-            </label>
-
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-              className="w-full px-4 py-3 rounded-lg border border-gray-300 text-gray-800 placeholder-gray-400 focus:outline-none focus:border-orange focus:ring-1 focus:ring-orange transition-colors duration-200 font-body text-sm sm:text-base"
-              placeholder="Enter your email address"
+              placeholder="Enter student name"
             />
           </div>
 
@@ -221,6 +206,67 @@ export default function RegistrationForm() {
             </p>
           </div>
 
+          {/* Age */}
+          <div>
+            <label
+              htmlFor="age"
+              className="block font-body text-sm font-semibold text-gray-700 mb-1.5 sm:mb-2"
+            >
+              Age
+            </label>
+
+            <select
+              id="age"
+              name="age"
+              value={formData.age}
+              onChange={handleChange}
+              required
+              className="w-full px-4 py-3 rounded-lg border border-gray-300 text-gray-800 focus:outline-none focus:border-orange focus:ring-1 focus:ring-orange transition-colors duration-200 bg-white font-body text-sm sm:text-base cursor-pointer"
+            >
+              <option value="" disabled>
+                Select Age
+              </option>
+
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+            </select>
+          </div>
+
+          {/* Class */}
+          <div>
+            <label
+              htmlFor="studentClass"
+              className="block font-body text-sm font-semibold text-gray-700 mb-1.5 sm:mb-2"
+            >
+              Class
+            </label>
+
+            <select
+              id="studentClass"
+              name="studentClass"
+              value={formData.studentClass}
+              onChange={handleChange}
+              required
+              className="w-full px-4 py-3 rounded-lg border border-gray-300 text-gray-800 focus:outline-none focus:border-orange focus:ring-1 focus:ring-orange transition-colors duration-200 bg-white font-body text-sm sm:text-base cursor-pointer"
+            >
+              <option value="" disabled>
+                Select Class
+              </option>
+
+              <option value="LKG">LKG</option>
+              <option value="UKG">UKG</option>
+              <option value="1st Standard">1st Standard</option>
+              <option value="2nd Standard">2nd Standard</option>
+              <option value="3rd Standard">3rd Standard</option>
+              <option value="4th Standard">4th Standard</option>
+            </select>
+          </div>
+
           {/* Slot Preference */}
           <div>
             <label
@@ -242,16 +288,12 @@ export default function RegistrationForm() {
                 Select your preferred slot
               </option>
 
-              <option value="Morning Batch (9:00 AM - 11:00 AM)">
-                Morning Batch (9:00 AM - 11:00 AM)
+              <option value="Morning Batch (9:00 AM - 12:00 PM)">
+                Morning Batch (9:00 AM - 12:00 PM)
               </option>
 
-              <option value="Afternoon Batch (1:00 PM - 3:00 PM)">
-                Afternoon Batch (1:00 PM - 3:00 PM)
-              </option>
-
-              <option value="Evening Batch (5:00 PM - 7:00 PM)">
-                Evening Batch (5:00 PM - 7:00 PM)
+              <option value="Afternoon Batch (2:00 PM - 5:00 PM)">
+                Afternoon Batch (2:00 PM - 5:00 PM)
               </option>
 
               <option value="Weekend Batch (Saturday & Sunday)">
